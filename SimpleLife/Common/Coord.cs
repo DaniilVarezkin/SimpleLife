@@ -1,4 +1,4 @@
-﻿namespace SimpleLife
+﻿namespace SimpleLife.Common
 {
     public struct Coord
     {

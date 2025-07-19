@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using SimpleLife.Common;
+using System.Text;
 
-namespace SimpleLife
+namespace SimpleLife.Units
 {
     public class Genome
     {
@@ -8,9 +9,8 @@ namespace SimpleLife
         private int cursor = 0;
         private Unit unit;
 
-        public Genome(Unit unit)
+        public void SetUnit(Unit unit)
         {
-            InitRandom();
             this.unit = unit;
         }
 
@@ -24,16 +24,37 @@ namespace SimpleLife
             }
         }
 
-        public void SaveToFile(string path)
+        public static void SaveToFile(Genome genome, string path)
         {
 
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            using (StreamWriter sw = new StreamWriter(path))
             {
-                string strGenes = string.Join(" ", genes);
-
-                fs.Write(Encoding.Default.GetBytes(strGenes));
+                string strGenes = string.Join(" ", genome.genes);
+                sw.Write(strGenes);
             }
         }
+
+
+        public static Genome CreateFromFile(string path)
+        {
+
+            Genome genome = new Genome();
+            using (StreamReader sr = new StreamReader(path))
+            {
+                string text = sr.ReadToEnd();
+                string[] genes = text.Split(' ');
+
+                if (genes.Length != Config.GENOME_SIZE) throw new Exception("Ошибка чтения генома");
+
+                for (int i = 0; i < Config.GENOME_SIZE; i++)
+                {
+                    genome.genes[i] = int.Parse(genes[i]);
+                }
+
+            }
+            return genome;
+        }
+
 
         public bool ReadNextCommand()
         {

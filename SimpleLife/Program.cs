@@ -1,9 +1,12 @@
 ﻿using SimpleLife;
+using SimpleLife.ConsoleRender;
+using SimpleLife.Units;
 
-Unit unit = new Unit();
+World world = new World();
 
-unit.Control();
+world.StartLife();
 
-//genome.InitRandom();
+WorldConsoleRenderer renderer = new WorldConsoleRenderer(world);
 
-//genome.SaveToFile("genome.txt");
+renderer.Render();
+

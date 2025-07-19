@@ -1,15 +1,16 @@
-﻿namespace SimpleLife
+﻿using SimpleLife.Common;
+
+namespace SimpleLife.Units
 {
-    public class Unit
+    public class Unit : Cell
     {
-        public Coord Coord { get; set; }
         public int Direction { get; set; }
         public Genome Genome { get; set; }
         public int Health { get; set; } = 100;
 
-        public Unit()
+        public Unit(Genome genome, Coord coord) : base(coord) 
         {
-            Genome = new Genome(this);
+            Genome = genome;
         }
 
         public void Control()
