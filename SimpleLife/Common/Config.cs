@@ -15,8 +15,8 @@
 
 
         //World
-        public static int WIDTH = 30;
-        public static int HEIGHT = 20;
+        public static int WIDTH = 40;
+        public static int HEIGHT = 30;
 
         public static int START_COUNT_UNITS = 20;
     }

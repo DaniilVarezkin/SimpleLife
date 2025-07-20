@@ -1,5 +1,5 @@
-﻿using SimpleLife.Common;
-using SimpleLife.Elements;
+﻿using SimpleLife.Elements;
+using SimpleLife.Units;
 
 namespace SimpleLife.ConsoleRender
 {
@@ -14,8 +14,10 @@ namespace SimpleLife.ConsoleRender
 
         public void Render()
         {
+            Console.CursorVisible = false;
+            Console.Clear();
             string strWorld = ConvertWorldToString();
-            Console.WriteLine(strWorld);
+            Console.Write(strWorld);
         }
 
         private string ConvertWorldToString()
@@ -31,20 +33,18 @@ namespace SimpleLife.ConsoleRender
                 }
             }
 
-            for(int i = 0; i < World.foods.Count; i++)
+            foreach (var cell in World.Cells)
             {
-                Food food = World.foods[i];
-                stringWorld[food.Coord.X, food.Coord.Y] = ConsoleRendererConfig.FOOD_CELL;
+                if (cell is Wall wall)
+                    stringWorld[wall.Coord.X, wall.Coord.Y] = ConsoleRendererConfig.WALL_CELL;
+                else if (cell is Food food)
+                    stringWorld[food.Coord.X, food.Coord.Y] = ConsoleRendererConfig.FOOD_CELL;
+                else if (cell is Poison poison)
+                    stringWorld[poison.Coord.X, poison.Coord.Y] = ConsoleRendererConfig.POISON_CELL;
+                else if (cell is Unit unit)
+                    stringWorld[unit.Coord.X, unit.Coord.Y] = ConsoleRendererConfig.UNIT_CELL;
+
             }
-
-            for (int i = 0; i < World.poisons.Count; i++)
-            {
-                Poison poison = World.poisons[i];
-                stringWorld[poison.Coord.X, poison.Coord.Y] = ConsoleRendererConfig.POISON_CELL;
-            }
-
-
-
 
             string[] lines = new string[World.Height];
 

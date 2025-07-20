@@ -4,9 +4,17 @@ using SimpleLife.Units;
 
 World world = new World();
 
-world.StartLife();
+world.AddCells();
 
-WorldConsoleRenderer renderer = new WorldConsoleRenderer(world);
+while (true)
+{
+    world.Iteration();
+    WorldConsoleRenderer renderer = new WorldConsoleRenderer(world);
 
-renderer.Render();
+    renderer.Render();
+
+    Thread.Sleep(100);
+}
+
+
 
